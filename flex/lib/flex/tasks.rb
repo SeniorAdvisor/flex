@@ -12,6 +12,7 @@ module Flex
     def default_options
       @default_options ||= { :force          => false,
                              :index          => Conf.variables[:index],
+                             :temp           => Conf.variables[:temp],
                              :config_file    => Conf.config_file }
     end
 
@@ -21,6 +22,13 @@ module Flex
         raise ExistingIndexError, "#{index.inspect} already exists. Please use FORCE=1 if you want to delete it first." \
               if exist?(index)
         create(index)
+      end
+    end
+
+    def create_for_temporary
+      indices.each do |index|
+        config_hash[index] = {} unless config_hash.has_key?(index)
+        Flex.POST "/#{options[:temp]}", config_hash[index]
       end
     end
 
