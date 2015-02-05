@@ -22,6 +22,9 @@ namespace :flex do
     desc 'destroys index/indices in the Flex::Configuration.config_file file'
     task(:delete => env) { Flex::Tasks.new.delete_indices }
 
+    desc "create index/indices with index name and Mapping template"
+    task(:create_for_temporary => env) { Flex::Tasks.new.create_for_temporary }
+
   end
 
 
